@@ -1,9 +1,10 @@
 package com.salon.entity;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
 
   private final Integer id;
   private String username;
@@ -60,8 +61,7 @@ public class User {
     if (this == o) return true;
     if (!(o instanceof User)) return false;
     User user = (User) o;
-    return Objects.equals(id, user.id)
-        && Objects.equals(username, user.username)
+    return Objects.equals(username, user.username)
         && Objects.equals(password, user.password)
         && role == user.role
         && Objects.equals(reservations, user.reservations);
@@ -69,7 +69,7 @@ public class User {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, username, password, role, reservations);
+    return Objects.hash( username, password, role, reservations);
   }
 
   @Override
@@ -98,6 +98,7 @@ public class User {
     private List<Reservation> reservations;
 
     private UserBuilder() {}
+
 
     public static UserBuilder anUser() {
       return new UserBuilder();

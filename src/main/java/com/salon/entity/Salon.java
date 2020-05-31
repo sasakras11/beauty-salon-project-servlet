@@ -39,14 +39,14 @@ public class Salon {
     if (this == o) return true;
     if (!(o instanceof Salon)) return false;
     Salon salon = (Salon) o;
-    return id == salon.id
-        && Objects.equals(address, salon.address)
+    return
+        Objects.equals(address, salon.address)
         && Objects.equals(masters, salon.masters);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, address, masters);
+    return Objects.hash(address, masters);
   }
 
   @Override

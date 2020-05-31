@@ -14,14 +14,14 @@ import java.util.Optional;
 
 public class ReservationDaoImpl extends AbstractCrudDaoImpl<Reservation> implements ReservationDao {
 
-    private static final String SAVE = "insert into reservations(end_hour,procedure_name,start_hour,beauty_master_user_id,client_user_id) values(?,?,?,?,?)";
-    private static final String UPDATE = "update reservations set end_hour = ?,procedure_name = ?,start_hour = ?,beauty_master_user_id = ?,client_user_id = ? where reservation_id = ?";
+    private static final String SAVE = "insert into reservations(end_hour,procedure_id,start_hour,beauty_master_user_id,client_user_id) values(?,?,?,?,?)";
+    private static final String UPDATE = "update reservations set end_hour = ?,procedure_id= ?,start_hour = ?,beauty_master_user_id = ?,client_user_id = ? where reservation_id = ?";
     private static final String FIND_MASTER_RESERVATIONS = "select *from reservations where beauty_master_user_id = ?";
     private static final String FIND_BY_ID = "select *from reservations where reservation_id = ?";
     @Override
     protected void setStatementParams(PreparedStatement statement, Reservation entity) throws SQLException {
         statement.setString(1, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entity.getEnd()));
-        statement.setString(2,entity.getProcedure().name());
+        statement.setInt(2,entity.getProcedure().getId());
         statement.setString(3, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(entity.getStart()));
         statement.setInt(4,entity.getBeautyMaster().getId());
         statement.setInt(5,entity.getClient().getId());
@@ -46,7 +46,6 @@ public class ReservationDaoImpl extends AbstractCrudDaoImpl<Reservation> impleme
         return Reservation.ReservationBuilder.aReservation()
                 .withId(resultSet.getInt("reservation_id"))
                 .withEnd(resultSet.getDate("end_hour"))
-                .withProcedure(Procedure.valueOf(resultSet.getString("procedure_name")))
                 .withStart(resultSet.getDate("start_hour"))
                 .build();
     }

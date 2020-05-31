@@ -138,6 +138,21 @@ public abstract class AbstractCrudDaoImpl<E> implements CrudDao<E> {
         }
     }
 
+    public List<E> findAll(String query){
+        List<E> items = new ArrayList<>();
+        try (Statement st = DataSource.getConnection().createStatement()) {
+            try (ResultSet resultSet = st.executeQuery(query)) {
+                while (resultSet.next()) {
+                    items.add(mapResultSetToEntity(resultSet));
+                }
+                return items;
+            }
+        } catch (SQLException e) {
+            LOGGER.error("Exception when extracting all rows of table");
+            throw new SqlQueryException("Exception when extracting all rows of table");
+        }
+    }
+
 
     public <P> List<E> getListById(P param, String query, BiConsumer<PreparedStatement, P> designatedParamSetter) { //need to be tested
 

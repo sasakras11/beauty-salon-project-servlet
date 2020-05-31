@@ -76,7 +76,6 @@ public class Comment {
     if (!(o instanceof Comment)) return false;
     Comment comment = (Comment) o;
     return serviceMark == comment.serviceMark
-        && Objects.equals(id, comment.id)
         && Objects.equals(master, comment.master)
         && Objects.equals(commentator, comment.commentator)
         && Objects.equals(commentText, comment.commentText)
@@ -86,7 +85,7 @@ public class Comment {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, master, commentator, commentText, serviceMark,commentDate);
+    return Objects.hash( master, commentator, commentText, serviceMark,commentDate);
   }
 
   @Override

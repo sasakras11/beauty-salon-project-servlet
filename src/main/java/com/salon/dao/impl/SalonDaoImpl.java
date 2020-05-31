@@ -6,6 +6,7 @@ import com.salon.entity.Salon;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 public class SalonDaoImpl extends AbstractCrudDaoImpl<Salon> implements SalonDao {
@@ -14,6 +15,7 @@ public class SalonDaoImpl extends AbstractCrudDaoImpl<Salon> implements SalonDao
   private static final String UPDATE = "update salons set address = ? where salon_id = ?";
   private static final String FIND_BY_ID = "select *from salons where salon_id = ?";
   private static final String FIND_BY_ADDRESS = "select *from salons where address = ?";
+  private static final String FIND_ALL = "select *from salons";
 
   @Override
   protected void setStatementParams(PreparedStatement statement, Salon entity) throws SQLException {
@@ -58,5 +60,10 @@ public class SalonDaoImpl extends AbstractCrudDaoImpl<Salon> implements SalonDao
   @Override
   public Optional<Salon> findByAddress(String address) {
     return  findByParam(address,FIND_BY_ADDRESS,SET_STATEMENT_STRING_PARAM);
+  }
+
+  @Override
+  public List<Salon> findAll() {
+    return findAll(FIND_ALL);
   }
 }

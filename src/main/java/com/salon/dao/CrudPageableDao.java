@@ -9,4 +9,6 @@ public interface CrudPageableDao<E> extends CrudDao<E> {
        return Collections.emptyList();
    }
 
+    
+
 }

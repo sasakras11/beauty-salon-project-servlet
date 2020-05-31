@@ -1,5 +1,6 @@
 package com.salon.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
@@ -76,8 +77,8 @@ public class Reservation {
     if (this == o) return true;
     if (!(o instanceof Reservation)) return false;
     Reservation that = (Reservation) o;
-    return Objects.equals(id, that.id)
-        && Objects.equals(start, that.start)
+    return
+         Objects.equals(start, that.start)
         && Objects.equals(end, that.end)
         && procedure == that.procedure
         && Objects.equals(beautyMaster, that.beautyMaster)
@@ -86,7 +87,7 @@ public class Reservation {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, start, end, procedure, beautyMaster, client);
+    return Objects.hash(start, end, procedure, beautyMaster, client);
   }
 
   @Override

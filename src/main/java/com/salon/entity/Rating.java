@@ -41,14 +41,13 @@ public class Rating {
     if (this == o) return true;
     if (!(o instanceof Rating)) return false;
     Rating rating1 = (Rating) o;
-    return Objects.equals(id, rating1.id)
-        && Objects.equals(master, rating1.master)
+    return Objects.equals(master, rating1.master)
         && Objects.equals(ratingMark, rating1.ratingMark);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, master, ratingMark);
+    return Objects.hash( master, ratingMark);
   }
 
   @Override
