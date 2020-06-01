@@ -1,5 +1,4 @@
 # Project exclude paths
 /target/
-salon-servlet.iml
 .idea
 *.iml
