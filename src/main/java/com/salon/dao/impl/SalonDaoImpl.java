@@ -39,17 +39,17 @@ public class SalonDaoImpl extends AbstractCrudDaoImpl<Salon> implements SalonDao
 
   @Override
   public void save(Salon entity) {
-    save(entity,SAVE);
+    save(entity, SAVE);
   }
 
   @Override
   public Optional<Salon> findById(Integer id) {
-    return findByParam(id,FIND_BY_ID,SET_STATEMENT_INT_PARAM);
+    return findByParam(id, FIND_BY_ID, SET_STATEMENT_INT_PARAM);
   }
 
   @Override
   public void update(Salon entity) {
-    update(entity,UPDATE);
+    update(entity, UPDATE);
   }
 
   @Override
@@ -59,7 +59,7 @@ public class SalonDaoImpl extends AbstractCrudDaoImpl<Salon> implements SalonDao
 
   @Override
   public Optional<Salon> findByAddress(String address) {
-    return  findByParam(address,FIND_BY_ADDRESS,SET_STATEMENT_STRING_PARAM);
+    return findByParam(address, FIND_BY_ADDRESS, SET_STATEMENT_STRING_PARAM);
   }
 
   @Override

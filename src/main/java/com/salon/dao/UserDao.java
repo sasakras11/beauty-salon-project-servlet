@@ -7,10 +7,7 @@ import java.util.Optional;
 
 public interface UserDao extends CrudDao<User> {
 
-    Optional<User> findByUserName(String username);
+  Optional<User> findByUserName(String username);
 
-    List<User> findAllMasterBySalonId(int salonId);
-
-
-
+  List<User> findAllMasterBySalonId(int salonId);
 }

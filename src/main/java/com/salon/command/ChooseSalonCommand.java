@@ -11,20 +11,20 @@ import java.io.IOException;
 
 public class ChooseSalonCommand extends FrontCommand {
 
-    private static final String SALON_ID = "salonId";
-    private final SalonService salonService;
+  private static final String SALON_ID = "salonId";
+  private final SalonService salonService;
 
-    public ChooseSalonCommand() {
-        this.salonService = AppContext.getSalonService();
-    }
+  public ChooseSalonCommand() {
+    this.salonService = AppContext.getSalonService();
+  }
 
-    @Override
-    public void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  @Override
+  public void process(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
 
-        User user = (User) req.getSession().getAttribute("user");
-        req.setAttribute("masters",salonService.getMastersOfSalon(req.getParameter(SALON_ID)));
-        req.getSession().setAttribute(SALON_ID,req.getParameter(SALON_ID));
-        forward(user.getRole().name().toLowerCase()+"/masters");
-
-    }
+    User user = (User) req.getSession().getAttribute("user");
+    req.setAttribute("masters", salonService.getMastersOfSalon(req.getParameter(SALON_ID)));
+    req.getSession().setAttribute(SALON_ID, req.getParameter(SALON_ID));
+    forward(user.getRole().name().toLowerCase() + "/masters");
+  }
 }

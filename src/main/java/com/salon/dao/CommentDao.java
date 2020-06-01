@@ -5,7 +5,7 @@ import com.salon.entity.User;
 
 import java.util.List;
 
-public interface CommentDao extends CrudDao<Comment>{
+public interface CommentDao extends CrudDao<Comment> {
 
-    List<Comment> findMasterComments(int masterId);
+  List<Comment> findMasterComments(int masterId);
 }

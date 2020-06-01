@@ -1,122 +1,184 @@
 DROP TABLE IF EXISTS salons_masters;
-
 DROP TABLE IF EXISTS comments;
-
 DROP TABLE IF EXISTS ratings;
-
 DROP TABLE IF EXISTS reservations;
-
-DROP table if exists salons;
-
-
+DROP TABLE IF EXISTS salons;
+DROP TABLE IF EXISTS procedures;
 DROP TABLE IF EXISTS users;
-
-
-create table users
+CREATE TABLE users
 (
-    user_id  integer not null auto_increment,
-    password varchar(255),
-    role     varchar(255),
-    username varchar(255),
-    primary key (user_id)
+    user_id  integer NOT NULL AUTO_INCREMENT,
+    password varchar(128),
+    ROLE     varchar(50),
+    username varchar(50),
+    PRIMARY KEY (user_id)
 );
-
-create table comments
+CREATE TABLE procedures
 (
-    comment_id     integer not null auto_increment,
-    comment_text   varchar(255),
+    procedure_id   integer NOT NULL AUTO_INCREMENT,
+    name           varchar(50),
+    description    text,
+    duration_hours integer,
+    PRIMARY KEY (procedure_id)
+);
+CREATE TABLE comments
+(
+    comment_id     integer NOT NULL AUTO_INCREMENT,
+    comment_text   text,
     comment_date   datetime,
     service_mark   integer,
     commentator_id integer,
     master_id      integer,
-    primary key (comment_id),
-    foreign key (commentator_id) references users(user_id),
-    foreign key (master_id) references users(user_id)
+    PRIMARY KEY (comment_id),
+    FOREIGN KEY (commentator_id) REFERENCES users (user_id),
+    FOREIGN KEY (master_id) REFERENCES users (user_id)
 );
-
-create table ratings
+CREATE TABLE ratings
 (
-    rating_id   integer not null auto_increment,
+    rating_id   integer NOT NULL AUTO_INCREMENT,
     rating_mark double precision,
     master_id   integer,
-    primary key (rating_id),
-    foreign key (master_id) references users(user_id)
+    PRIMARY KEY (rating_id),
+    FOREIGN KEY (master_id) REFERENCES users (user_id)
 );
-
-create table reservations
+CREATE TABLE reservations
 (
-    reservation_id        integer not null auto_increment,
+    reservation_id        integer NOT NULL AUTO_INCREMENT,
     end_hour              datetime,
-    procedure_name        varchar(255),
+    procedure_id          integer,
     start_hour            datetime,
     beauty_master_user_id integer,
     client_user_id        integer,
-    primary key (reservation_id),
-    foreign key (beauty_master_user_id) references users(user_id),
-    foreign key (client_user_id) references users(user_id)
+    PRIMARY KEY (reservation_id),
+    FOREIGN KEY (beauty_master_user_id) REFERENCES users (user_id),
+    FOREIGN KEY (client_user_id) REFERENCES users (user_id),
+    FOREIGN KEY (procedure_id) REFERENCES procedures (procedure_id)
 );
-
-create table salons
+CREATE TABLE salons
 (
-    salon_id integer not null auto_increment,
-    address  varchar(255),
-    primary key (salon_id)
+    salon_id integer NOT NULL AUTO_INCREMENT,
+    address  varchar(100),
+    PRIMARY KEY (salon_id)
 );
-
-create table salons_masters
+CREATE TABLE salons_masters
 (
-
-    salon_id  integer not null,
-    masters_user_id integer not null,
-    foreign key (salon_id) references salons(salon_id),
-    foreign key (masters_user_id) references users(user_id)
+    salon_id        integer NOT NULL,
+    masters_user_id integer NOT NULL,
+    FOREIGN KEY (salon_id) REFERENCES salons (salon_id),
+    FOREIGN KEY (masters_user_id) REFERENCES users (user_id)
 );
 
-insert into users (username,password,role) VALUES('alex','d1318d8105c258247a068183a96acb33a90a742a904c8405a835c53490accb22d4d15248c5f5d5c05ea306b2edf1c389c00ccda7c5de2b54bc64b2b88f145df8','ADMIN');
-insert into users (username,password,role) VALUES('ivan','62cb52a205221150477046660d3ab9e04fd2b2e44fd2152e4f844f254e892595f65542448980d58887b4cd397b6c39e55391e59b1b5cf50470e3861f19bf4baf','CLIENT');
-insert into users (username,password,role) VALUES('sonya','09d8bd371fd0b752971147fc9ff092058ea7abfba05bd2adf8c24320b3e2b845319911a630605fa551bcb596b0e8e120948eb26bf515c343d9548608aeb3c8c8','MASTER');
-insert into users (username,password,role) VALUES('dasha','37d79ccf5901911acf9f7dfc198fbc43aa505d97853ee0bb734d8a8946026ae1f0ba2a8c17ccae67f18db27a7139f445fc1ae9fc9b9e2fe92fe373d7164cb1c2','CLIENT');
-insert into users (username,password,role) VALUES('ira','a9e2bece423fe7b1d25aff55237b5981c2b33f316e3fd378db87831b03f8dcadd9ed4ca3b3517c492cdf25cac26bf91e306fdb62aeddec92a0e0313ce5bea812','MASTER');
+insert into users (username, password, role)
+VALUES ('alex',
+        'd1318d8105c258247a068183a96acb33a90a742a904c8405a835c53490accb22d4d15248c5f5d5c05ea306b2edf1c389c00ccda7c5de2b54bc64b2b88f145df8',
+        'ADMIN');
+insert into users (username, password, role)
+VALUES ('ivan',
+        '62cb52a205221150477046660d3ab9e04fd2b2e44fd2152e4f844f254e892595f65542448980d58887b4cd397b6c39e55391e59b1b5cf50470e3861f19bf4baf',
+        'CLIENT');
+insert into users (username, password, role)
+VALUES ('sonya',
+        '09d8bd371fd0b752971147fc9ff092058ea7abfba05bd2adf8c24320b3e2b845319911a630605fa551bcb596b0e8e120948eb26bf515c343d9548608aeb3c8c8',
+        'MASTER');
+insert into users (username, password, role)
+VALUES ('dasha',
+        '37d79ccf5901911acf9f7dfc198fbc43aa505d97853ee0bb734d8a8946026ae1f0ba2a8c17ccae67f18db27a7139f445fc1ae9fc9b9e2fe92fe373d7164cb1c2',
+        'CLIENT');
+insert into users (username, password, role)
+VALUES ('ira',
+        'a9e2bece423fe7b1d25aff55237b5981c2b33f316e3fd378db87831b03f8dcadd9ed4ca3b3517c492cdf25cac26bf91e306fdb62aeddec92a0e0313ce5bea812',
+        'MASTER');
 
-insert into comments(commentator_id,master_id,comment_text,service_mark,comment_date) values(1,3,'very good service',4,'2020-5-18 15:23:44');
-insert into comments(commentator_id,master_id,comment_text,service_mark,comment_date) values(2,3,'ty',4,'2020-5-19 15:23:11');
-insert into comments(commentator_id,master_id,comment_text,service_mark,comment_date) values(4,3,'ty for service',4,'2020-5-11 10:12:41');
-
-
-
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-18 15:00:00','2020-5-18 16:00:00','HAIR_CUT',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-18 14:00:00','2020-5-18 15:00:00','HAIR_CUT',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-18 9:00:00','2020-5-18 10:00:00','HAIR_CUT',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-18 14:00:00','2020-5-18 15:00:00','HAIR_CUT',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-18 9:00:00','2020-5-18 10:00:00','HAIR_CUT',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-17 10:00:00','2020-5-18 11:00:00','HAIR_CUT',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-17 12:00:00','2020-5-18 13:00:00','PILLING',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-17 15:00:00','2020-5-18 16:00:00','PILLING',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-19 10:00:00','2020-5-18 11:00:00','PILLING',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-19 11:00:00','2020-5-18 12:00:00','PILLING',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-19 13:00:00','2020-5-18 14:00:00','PILLING',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-19 15:00:00','2020-5-18 16:00:00','PILLING',3,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-20 11:00:00','2020-5-18 16:00:00','BODY_SCRUB',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-20 12:00:00','2020-5-18 13:00:00','BODY_SCRUB',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-20 14:00:00','2020-5-18 15:00:00','BODY_SCRUB',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-21 11:00:00','2020-5-18 12:00:00','BODY_SCRUB',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-21 13:00:00','2020-5-18 14:00:00','BODY_SCRUB',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-21 15:00:00','2020-5-18 16:00:00','BODY_SCRUB',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-22 17:00:00','2020-5-18 18:00:00','BODY_SCRUB',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-22 10:00:00','2020-5-18 11:00:00','BODY_SCRUB',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-22 9:00:00','2020-5-18 10:00:00','SUGARING',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-23 15:00:00','2020-5-18 16:00:00','SUGARING',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-23 12:00:00','2020-5-18 13:00:00','SUGARING',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-23 11:00:00','2020-5-18 12:00:00','SUGARING',5,2);
-insert into reservations(start_hour,end_hour,procedure_name,beauty_master_user_id,client_user_id) values('2020-5-24 15:00:00','2020-5-18 16:00:00','SUGARING',5,2);
-
-insert into salons(address) values('Solomona 7');
-insert into salons(address) values('Ivana 4');
-
-insert into salons_masters(salon_id,masters_user_id) values(1,3);
-insert into salons_masters(salon_id,masters_user_id) values(2,5);
-insert into salons_masters(salon_id,masters_user_id) values(1,1);
+insert into comments(commentator_id, master_id, comment_text, service_mark, comment_date)
+values (1, 3, 'very good service', 4, '2020-5-18 15:23:44');
+insert into comments(commentator_id, master_id, comment_text, service_mark, comment_date)
+values (2, 3, 'ty', 4, '2020-5-19 15:23:11');
+insert into comments(commentator_id, master_id, comment_text, service_mark, comment_date)
+values (4, 3, 'ty for service', 4, '2020-5-11 10:12:41');
 
 
-insert into ratings(rating_mark,master_id) values(3.5,3);
-insert into ratings(rating_mark,master_id) values(4.0,5);
+insert into procedures(name, description, duration_hours)
+values ('hair cut', 'alallaalalal', 1);
+insert into procedures(name, description, duration_hours)
+values ('pilling', 'alallaalalal', 1);
+insert into procedures(name, description, duration_hours)
+values ('head massage', 'alallaalalal', 1);
+insert into procedures(name, description, duration_hours)
+values ('leg massage', 'alallaalalal', 1);
+insert into procedures(name, description, duration_hours)
+values ('hand massage', 'alallaalalal', 1);
+insert into procedures(name, description, duration_hours)
+values ('back massage', 'alallaalalal', 1);
+insert into procedures(name, description, duration_hours)
+values ('face massage', 'alallaalalal', 1);
+insert into procedures(name, description, duration_hours)
+values ('full massage', 'alallaalalal', 2);
+
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-18 15:00:00', '2020-5-18 16:00:00', 1, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-18 14:00:00', '2020-5-18 15:00:00', 2, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-18 9:00:00', '2020-5-18 10:00:00', 3, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-18 14:00:00', '2020-5-18 15:00:00', 2, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-18 9:00:00', '2020-5-18 10:00:00', 3, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-17 10:00:00', '2020-5-18 11:00:00', 2, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-17 12:00:00', '2020-5-18 13:00:00', 3, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-17 15:00:00', '2020-5-18 16:00:00', 2, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-19 10:00:00', '2020-5-18 11:00:00', 1, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-19 11:00:00', '2020-5-18 12:00:00', 2, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-19 13:00:00', '2020-5-18 14:00:00', 1, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-19 15:00:00', '2020-5-18 16:00:00', 4, 3, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-20 11:00:00', '2020-5-18 16:00:00', 4, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-20 12:00:00', '2020-5-18 13:00:00', 3, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-20 14:00:00', '2020-5-18 15:00:00', 2, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-21 11:00:00', '2020-5-18 12:00:00', 2, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-21 13:00:00', '2020-5-18 14:00:00', 1, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-21 15:00:00', '2020-5-18 16:00:00', 3, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-22 17:00:00', '2020-5-18 18:00:00', 3, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-22 10:00:00', '2020-5-18 11:00:00', 4, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-22 9:00:00', '2020-5-18 10:00:00', 5, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-23 15:00:00', '2020-5-18 16:00:00', 4, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-23 12:00:00', '2020-5-18 13:00:00', 4, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-23 11:00:00', '2020-5-18 12:00:00', 4, 5, 2);
+insert into reservations(start_hour, end_hour, procedure_id, beauty_master_user_id, client_user_id)
+values ('2020-5-24 15:00:00', '2020-5-18 16:00:00', 4, 5, 2);
+
+insert into salons(address)
+values ('Solomona 7');
+insert into salons(address)
+values ('Ivana 4');
+
+insert into salons_masters(salon_id, masters_user_id)
+values (1, 3);
+insert into salons_masters(salon_id, masters_user_id)
+values (2, 5);
+insert into salons_masters(salon_id, masters_user_id)
+values (1, 1);
+
+
+insert into ratings(rating_mark, master_id)
+values (3.5, 3);
+insert into ratings(rating_mark, master_id)
+values (4.0, 5);

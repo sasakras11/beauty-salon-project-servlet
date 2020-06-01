@@ -26,7 +26,6 @@ public class RatingDaoImpl extends AbstractCrudDaoImpl<Rating> implements Rating
       throws SQLException {
     setStatementParams(statement, entity);
     statement.setInt(3, entity.getId());
-    
   }
 
   @Override

@@ -2,7 +2,6 @@ package com.salon.service.impl;
 
 import com.salon.dao.ProcedureDao;
 import com.salon.entity.Procedure;
-import com.salon.exception.ValidationException;
 import com.salon.service.ProcedureService;
 import com.salon.service.util.DataParser;
 

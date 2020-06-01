@@ -10,20 +10,21 @@ import java.security.spec.InvalidKeySpecException;
 
 public class PasswordUtil {
 
-    private static final String SALT = "abf8345f13";
-    private static final int ITERATIONS = 5;
-    private static final int KEY_LENGTH = 512;
+  private static final String SALT = "abf8345f13";
+  private static final int ITERATIONS = 5;
+  private static final int KEY_LENGTH = 512;
 
-    public String getHashedPassword(String password) {
-        byte[] res = null;
-        try {
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
-            PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), SALT.getBytes(), ITERATIONS, KEY_LENGTH);
-            SecretKey key = skf.generateSecret(spec);
-            res = key.getEncoded();
-            return Hex.encodeHexString(res);
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new RuntimeException(e);
-        }
+  public String getHashedPassword(String password) {
+    byte[] res = null;
+    try {
+      SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
+      PBEKeySpec spec =
+          new PBEKeySpec(password.toCharArray(), SALT.getBytes(), ITERATIONS, KEY_LENGTH);
+      SecretKey key = skf.generateSecret(spec);
+      res = key.getEncoded();
+      return Hex.encodeHexString(res);
+    } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+      throw new RuntimeException(e);
     }
+  }
 }

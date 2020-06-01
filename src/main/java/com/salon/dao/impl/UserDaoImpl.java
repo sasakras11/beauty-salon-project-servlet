@@ -12,7 +12,7 @@ import java.util.Optional;
 
 public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
 
-  private static final String SAVE= "insert into users(username,password,role) VALUES(?,?,?)";
+  private static final String SAVE = "insert into users(username,password,role) VALUES(?,?,?)";
   private static final String FIND_BY_ID = "select *from users where user_id = ?";
   private static final String UPDATE =
       "update users set username = ?,password = ?,role = ? where user_id=?";
@@ -37,10 +37,10 @@ public class UserDaoImpl extends AbstractCrudDaoImpl<User> implements UserDao {
   @Override
   protected User mapResultSetToEntity(ResultSet resultSet) throws SQLException {
     return User.UserBuilder.anUser()
-            .withId(resultSet.getInt("user_id"))
-            .withUsername(resultSet.getString("username"))
-            .withPassword(resultSet.getString("password"))
-            .withRole(Role.valueOf(resultSet.getString("role")))
+        .withId(resultSet.getInt("user_id"))
+        .withUsername(resultSet.getString("username"))
+        .withPassword(resultSet.getString("password"))
+        .withRole(Role.valueOf(resultSet.getString("role")))
         .build();
   }
 

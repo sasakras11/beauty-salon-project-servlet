@@ -11,20 +11,20 @@ import java.io.IOException;
 
 public class FIndPageCommand extends FrontCommand {
 
-    private final ProcedureService procedureService;
+  private final ProcedureService procedureService;
 
-    public FIndPageCommand() {
-        this.procedureService = AppContext.getProcedureService();
-    }
+  public FIndPageCommand() {
+    this.procedureService = AppContext.getProcedureService();
+  }
 
-    @Override
-    public void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  @Override
+  public void process(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
 
-        User user = (User) req.getSession().getAttribute("user");
-       req.setAttribute("procedures",procedureService.findAll(req.getParameter("page")));
-        req.setAttribute("pagesCount",procedureService.pagesCount());
+    User user = (User) req.getSession().getAttribute("user");
+    req.setAttribute("procedures", procedureService.findAll(req.getParameter("page")));
+    req.setAttribute("pagesCount", procedureService.pagesCount());
 
-        forward(user.getRole().name().toLowerCase(),"procedure");
-
-    }
+    forward(user.getRole().name().toLowerCase(), "procedure");
+  }
 }

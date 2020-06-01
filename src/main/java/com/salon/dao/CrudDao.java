@@ -6,15 +6,15 @@ import java.util.Optional;
 
 public interface CrudDao<E> {
 
-    void save(E entity);
+  void save(E entity);
 
-    Optional<E> findById(Integer id);
+  Optional<E> findById(Integer id);
 
-    default List<E> findAll() {
-        return Collections.emptyList();
-    }
+  default List<E> findAll() {
+    return Collections.emptyList();
+  }
 
-    void update(E entity);
+  void update(E entity);
 
-    void deleteById(Integer id);
+  void deleteById(Integer id);
 }

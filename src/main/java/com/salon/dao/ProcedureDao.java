@@ -4,5 +4,5 @@ import com.salon.entity.Procedure;
 
 public interface ProcedureDao extends CrudPageableDao<Procedure> {
 
-    int count();
+  int count();
 }

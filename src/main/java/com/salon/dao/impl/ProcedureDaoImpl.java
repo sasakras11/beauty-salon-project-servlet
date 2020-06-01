@@ -19,6 +19,7 @@ public class ProcedureDaoImpl extends AbstractCrudDaoImpl<Procedure> implements 
   private static final String FIND_BY_ID = "select *from procedures where procedure_id = ?";
   private static final String GET_PAGE = "select * from procedures  limit ? offset ?";
   private static final String COUNT = "select count(*) as total from procedures";
+
   @Override
   protected void setStatementParams(PreparedStatement statement, Procedure entity)
       throws SQLException {
@@ -51,7 +52,7 @@ public class ProcedureDaoImpl extends AbstractCrudDaoImpl<Procedure> implements 
 
   @Override
   public Optional<Procedure> findById(Integer id) {
-    return findByParam(id,FIND_BY_ID,SET_STATEMENT_INT_PARAM) ;
+    return findByParam(id, FIND_BY_ID, SET_STATEMENT_INT_PARAM);
   }
 
   @Override
@@ -60,7 +61,8 @@ public class ProcedureDaoImpl extends AbstractCrudDaoImpl<Procedure> implements 
   }
 
   @Override
-  public void deleteById(Integer id) {throw new UnsupportedOperationException();
+  public void deleteById(Integer id) {
+    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -70,6 +72,6 @@ public class ProcedureDaoImpl extends AbstractCrudDaoImpl<Procedure> implements 
 
   @Override
   public List<Procedure> findAll(int page, int itemsPerPage) {
-    return findAll(page,itemsPerPage,GET_PAGE);
+    return findAll(page, itemsPerPage, GET_PAGE);
   }
 }
